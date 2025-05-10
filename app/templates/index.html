@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gym Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <h1>Gym Recommendations</h1>
+    <div id="map" style="height: 500px;"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const gyms = {{ gyms | tojson }};
+        const map = L.map('map').setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        gyms.forEach(gym => {
+            const marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
+            marker.bindPopup(`<b>${gym.name}</b><br>Rating: ${gym.rating}`);
+        });
+    </script>
+</body>
+</html>
