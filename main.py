@@ -8,8 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
 
+
+import os
 import json
 import pathlib
+import geopandas as gpd 
+import osmnx as ox
+import matplotlib.pyplot as plt
+import folium
+
+ox.__version__
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -33,7 +41,7 @@ def get_db():
         db.close()
 
 # updates
-# fix problem with DB (check docs section of website to see error)
+# learn osmnx (https://github.com/gboeing/osmnx-examples/blob/main/notebooks/11-interactive-web-mapping.ipynb)
 
 class User(BaseModel):
     name: str
@@ -48,6 +56,17 @@ user = User.model_validate_json(json_str)
 print(user.name)
 print(user.email)
 print(user.account_id)
+
+# AOI = 'Minneapolis, Minnesota, USA'
+# aoi_gdf = ox.geocode_to_gdf(AOI)
+
+# # area of interest plotted 
+# basemap = aoi_gdf.explore(color='lightblue')
+# basemap
+
+G = ox.graph.graph_from_place("Minneapolis, Minnesota, USA", network_type="drive")
+fig, ax = ox.plot.plot_graph(G)
+
 
 class UserLocation(BaseModel):
     latitude: float
