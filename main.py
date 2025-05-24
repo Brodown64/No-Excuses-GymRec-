@@ -7,6 +7,7 @@ from database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
+from folium import Map
 
 
 import os
@@ -14,8 +15,8 @@ import json
 import pathlib
 import geopandas as gpd 
 import osmnx as ox
+import networkx as nx
 import matplotlib.pyplot as plt
-import folium
 
 ox.__version__
 
@@ -23,6 +24,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="app/templates")
+
 # app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 app.add_middleware(
@@ -41,7 +43,8 @@ def get_db():
         db.close()
 
 # updates
-# learn osmnx (https://github.com/gboeing/osmnx-examples/blob/main/notebooks/11-interactive-web-mapping.ipynb)
+# idfk man figure out folium
+# use http://localhost:8000 from now on
 
 class User(BaseModel):
     name: str
@@ -64,29 +67,31 @@ print(user.account_id)
 # basemap = aoi_gdf.explore(color='lightblue')
 # basemap
 
-G = ox.graph.graph_from_place("Minneapolis, Minnesota, USA", network_type="drive")
-fig, ax = ox.plot.plot_graph(G)
+#interactive code
+m.save('map.html')
 
+#interactive code (end)
 
 class UserLocation(BaseModel):
     latitude: float
     longitude: float
 
-@app.get("/")
-async def root(request: Request, db: Session = Depends(get_db)):
-    gyms = crud.get_gyms(db)
-    return templates.TemplateResponse("index.html", {"request": request, "gyms": gyms})
-    return {"message": "Hello World"}
+# @app.get("/")
+# async def root(request: Request, db: Session = Depends(get_db)):
+#     gyms = crud.get_gyms(db)
+#     return templates.TemplateResponse("index.html", {"request": request, "gyms": gyms})
+#     return {"message": "Hello World"}
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    m = Map()
+    return m.get_root().render()
 
 @app.post("/gyms/", response_model=schemas.Gym)
 def add_gym(gym: schemas.GymCreate, db: Session = Depends(get_db)):
     return crud.create_gym(db, gym)
 
 @app.get("/gyms/", response_model=list[schemas.Gym])
-def list_gyms(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def list_gyms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_gyms(db, skip=skip, limit=limit)
 
-@app.post("/location/")
-async def create_location(location: UserLocation):
-    
-    return {"received_latitude": location.latitude, "received_longitude": location.longitude}

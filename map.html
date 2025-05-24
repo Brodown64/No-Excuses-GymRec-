@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9a46380d4c9222da4c0d6d8ae7571d86 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_9a46380d4c9222da4c0d6d8ae7571d86" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_9a46380d4c9222da4c0d6d8ae7571d86 = L.map(
+                "map_9a46380d4c9222da4c0d6d8ae7571d86",
+                {
+                    center: [44.949642, -93.093124],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5c93e0a4d39e2dbc267f7fbce0f5005b = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5c93e0a4d39e2dbc267f7fbce0f5005b.addTo(map_9a46380d4c9222da4c0d6d8ae7571d86);
+        
+    
+            var marker_3ddbca0543fbb4e3fb4a62a1b1791740 = L.marker(
+                [44.949642, -93.093124],
+                {
+}
+            ).addTo(map_9a46380d4c9222da4c0d6d8ae7571d86);
+        
+    
+        var popup_6a726c3732bf4d81e4b2f533f424f6f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ec7dc96dfb6c6d5858734fb3bcfaba6 = $(`<div id="html_1ec7dc96dfb6c6d5858734fb3bcfaba6" style="width: 100.0%; height: 100.0%;"><strong>Location One</strong></div>`)[0];
+                popup_6a726c3732bf4d81e4b2f533f424f6f9.setContent(html_1ec7dc96dfb6c6d5858734fb3bcfaba6);
+            
+        
+
+        marker_3ddbca0543fbb4e3fb4a62a1b1791740.bindPopup(popup_6a726c3732bf4d81e4b2f533f424f6f9)
+        ;
+
+        
+    
+    
+            marker_3ddbca0543fbb4e3fb4a62a1b1791740.bindTooltip(
+                `<div>
+                     Click For Deez Nuts
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

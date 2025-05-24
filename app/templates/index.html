@@ -17,10 +17,14 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        gyms.forEach(gym => {
-            const marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
-            marker.bindPopup(`<b>${gym.name}</b><br>Rating: ${gym.rating}`);
-        });
+  fetch("http://localhost:8000/gyms/")
+    .then(res => res.json())
+    .then(gyms => {
+      gyms.forEach(gym => {
+        const marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
+        marker.bindPopup(`<b>${gym.name}</b><br>${gym.location}<br>⭐ ${gym.rating}`);
+      });
+    });
     </script>
 </body>
 </html>
