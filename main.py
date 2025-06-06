@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
 from folium import Map
+from map import m
 
 
 import os
@@ -43,7 +44,7 @@ def get_db():
         db.close()
 
 # updates
-# idfk man figure out folium
+# integrate the map with FastAPI site
 # use http://localhost:8000 from now on
 
 class User(BaseModel):
@@ -68,7 +69,7 @@ print(user.account_id)
 # basemap
 
 #interactive code
-m.save('map.html')
+m.save('osm_gyms_map.html')
 
 #interactive code (end)
 
