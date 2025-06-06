@@ -9,6 +9,8 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
 from folium import Map
 from map import m
+import requests
+import folium
 
 
 import os
@@ -25,6 +27,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="app/templates")
+
+bbox = [40.70, -74.02, 40.78, -73.95] 
 
 # app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
@@ -88,11 +92,55 @@ async def root():
     m = Map()
     return m.get_root().render()
 
-@app.post("/gyms/", response_model=schemas.Gym)
-def add_gym(gym: schemas.GymCreate, db: Session = Depends(get_db)):
-    return crud.create_gym(db, gym)
+@app.get("/map", response_class=HTMLResponse)
+def show_map(request: Request):
+    # OSM Overpass Query for gyms and fitness centres
+    query = f"""
+    [out:json];
+    (
+      node["amenity"="gym"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+      way["amenity"="gym"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+      relation["amenity"="gym"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+      node["leisure"="fitness_centre"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+      way["leisure"="fitness_centre"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+      relation["leisure"="fitness_centre"]({bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]});
+    );
+    out center;
+    """
+    response = requests.post("http://overpass-api.de/api/interpreter", data={"data": query})
+    data = response.json()
 
-@app.get("/gyms/", response_model=list[schemas.Gym])
-def list_gyms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_gyms(db, skip=skip, limit=limit)
+    # Center map in the middle of bounding box
+    center = [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
+    m = folium.Map(location=center, zoom_start=14)
 
+    # Add markers
+    for el in data['elements']:
+        if 'lat' in el and 'lon' in el:
+            lat, lon = el['lat'], el['lon']
+        elif 'center' in el:
+            lat, lon = el['center']['lat'], el['center']['lon']
+        else:
+            continue
+
+        tags = el.get('tags', {})
+        name = tags.get('name', 'Unnamed')
+
+        if tags.get('amenity') == 'gym':
+            color = 'red'
+        elif tags.get('leisure') == 'fitness_centre':
+            color = 'blue'
+        else:
+            color = 'gray'
+
+        folium.Marker(
+            location=[lat, lon],
+            popup=name,
+            tooltip=name,
+            icon=folium.Icon(color=color, icon="info-sign")
+        ).add_to(m)
+
+    # Generate the HTML of the map
+    map_html = m.get_root().render()
+
+    return templates.TemplateResponse("osm_gyms_map.html", {"request": request, "osm_gyms_map_html": map_html})
