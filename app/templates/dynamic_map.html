@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Gym Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>Gym Recommendations</h1>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Enter a city (Ex: Minneapolis, Minnesota)">
+        <button id="search-btn">Search</button>
+    </div>
+    <div id="map"></div>
+
+    <script>
+        const map = L.map('map').setView([40.7128, -74.0060], 13); // default NYC
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let markersLayer = L.layerGroup().addTo(map);
+
+        document.getElementById("search-btn").addEventListener("click", async () => {
+            const query = document.getElementById("search-input").value.trim();
+            if (!query) return;
+
+            // 1. Get coordinates from Nominatim
+            const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+            const geoData = await geoRes.json();
+            if (!geoData || geoData.length === 0) {
+                alert("Location not found.");
+                return;
+            }
+
+            const lat = parseFloat(geoData[0].lat);
+            const lon = parseFloat(geoData[0].lon);
+
+            map.setView([lat, lon], 14);
+            
+            const bboxSize = 0.05;  
+            const south = lat - bboxSize;
+            const west = lon - bboxSize;
+            const north = lat + bboxSize;
+            const east = lon + bboxSize;
+
+            const queryStr = `
+                [out:json];
+                (
+                  node["amenity"="gym"](${south},${west},${north},${east});
+                  way["amenity"="gym"](${south},${west},${north},${east});
+                  relation["amenity"="gym"](${south},${west},${north},${east});
+                  node["leisure"="fitness_centre"](${south},${west},${north},${east});
+                  way["leisure"="fitness_centre"](${south},${west},${north},${east});
+                  relation["leisure"="fitness_centre"](${south},${west},${north},${east});
+                );
+                out center;
+            `;
+
+            const overpassRes = await fetch("https://overpass-api.de/api/interpreter", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "data=" + encodeURIComponent(queryStr)
+            });
+
+            const data = await overpassRes.json();
+
+            markersLayer.clearLayers();
+
+            if (!data.elements || data.elements.length === 0) {
+                alert("No gyms found in this area.");
+                return;
+            }
+
+            for (const el of data.elements) {
+                let lat = el.lat || el.center?.lat;
+                let lon = el.lon || el.center?.lon;
+                if (!lat || !lon) continue;
+
+                const name = el.tags?.name || "Unnamed Gym";
+                const type = el.tags?.amenity === "gym" ? "Gym" : "Fitness Centre";
+
+                L.marker([lat, lon], {
+                    icon: L.icon({
+                        iconUrl: "https://img.freepik.com/premium-vector/dumbbell-vector-icon-white-background-dumbbell-vector-icon-great-design-any-purposes_820464-370.jpg",
+                        iconSize: [25, 25],
+                        iconAnchor: [12, 25],
+                        popupAnchor: [0, -25]
+                    })
+                })
+                .bindPopup(`<b>${name}</b><br>${type}`)
+                .addTo(markersLayer);
+            }
+        });
+    </script>
+</body>
+</html>
