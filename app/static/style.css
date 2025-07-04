@@ -5,8 +5,8 @@ html, body {
 
 /* Wrapper for the map to control size */
 #map-wrapper {
-    width: 800px;
-    height: 500px;
+    width: 50px;
+    height: 50px;
     margin: 40px auto;
     border: 1px solid #aaa;
     border-radius: 10px;
@@ -15,8 +15,8 @@ html, body {
 
 /* Actual map fills the wrapper */
 #map {
-    width: 100%;
-    height: 75%;
+    width: 50%;
+    height: 50%;
 }
 
 /* Search bar container */
@@ -40,4 +40,42 @@ html, body {
 #search-btn {
     padding: 6px 12px;
     margin-left: 5px;
+}
+
+#form {
+  width: 300px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#input {
+  all: unset;
+  font: 16px system-ui;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  padding: 6px 10px;
+}
+
+#button {
+  all: unset;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+}
+
+#svg {
+  color: #fff;
+  fill: currentColor;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+}
+
+#image {
+    width: 50px; 
+    height: 50px; 
 }

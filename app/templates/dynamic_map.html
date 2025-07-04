@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dynamic Gym Map</title>
+    <title>No Excuses</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -15,6 +15,20 @@
         <input type="text" id="search-input" placeholder="Enter a city (Ex: Minneapolis, Minnesota)">
         <button id="search-btn">Search</button>
     </div>
+    
+    <i>Check Your Gym in Google!</i>
+
+    <div id="input">
+        <form action="https://www.google.com/search" method="get">
+            <input type="text" placeholder="search anything" name="q">
+            <button type="submit"></button>
+        </form>
+    </div>
+    
+    <div id="image">
+        <img src="https://i.pinimg.com/736x/ed/c0/98/edc09829d14fce2738ad7b5d4a64ad84.jpg" alt="Rise and Grind" style="float:right">     
+    </div>
+
     <div id="map"></div>
 
     <script>

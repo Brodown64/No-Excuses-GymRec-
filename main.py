@@ -8,7 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
 from folium import Map
-from map import m
 import requests
 import folium
 
@@ -49,28 +48,12 @@ def get_db():
         db.close()
 
 # updates
-# floating google search bar that lists the gym when pasted from map/advanced search bar that looks for gyms with DB variables
-# it has to be in one file
+# resize image
 
 class User(BaseModel):
     name: str
     email: EmailStr
     account_id: int
-
-json_str = pathlib.Path("user.json").read_text()
-user = User.model_validate_json(json_str)
-
-# AOI = 'Minneapolis, Minnesota, USA'
-# aoi_gdf = ox.geocode_to_gdf(AOI)
-
-# # area of interest plotted 
-# basemap = aoi_gdf.explore(color='lightblue')
-# basemap
-
-#interactive code
-# m.save('osm_gyms_map.html')
-
-#interactive code (end)
 
 class UserLocation(BaseModel):
     latitude: float
@@ -84,7 +67,6 @@ style = Element("""
     }
 </style>
 """)
-m.get_root().html.add_child(style)
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
