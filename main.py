@@ -48,7 +48,8 @@ def get_db():
         db.close()
 
 # updates
-# resize image
+# a nice front page (learn CSS and implement everything on front page thru trial and error, make it professional but not souless)
+# learn how to make a fade in on the boxes
 
 class User(BaseModel):
     name: str

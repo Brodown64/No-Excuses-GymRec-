@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gym Map</title>
+    <title>No Excuses</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/style.css" />
+    <style>
+        body {
+            background-image: url('/static/images/untitled_design.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Gym Recommendations</h1>
-    <div id="map" style="height: 500px;"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map').setView([0, 0], 2);
+    <h1>Welcome to No Excuses!</h1>
+    <h1>You are jaded with life right now, but we can build with this!</h1>
+    <p>Does any ONE of these fit with you right now? </p>
+    <ul>
+        <li>Tired of your bad health</li>
+        <li>Frustrated with your lack of social skills</li>
+        <li>The modern news cycle of negativity biting you on the inside</li>
+        <li>No motivation/discipline</li>
+        <li>Procrasination</li>
+        <li>Weak time management skills</li>
+        <li>Losing that child like ambition for life</li>
+        <li>Can't enjoy past interests</li>
+    </ul>
+    <p class="center-text"><em>I've been through all of this, so I'll teach you all I know!</em></p>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+    <h1>IMPORTANT: This will be inhibited into you with unapologetic honesty, and the info is free!</h1>
 
-  fetch("http://localhost:8000/gyms/")
-    .then(res => res.json())
-    .then(gyms => {
-      gyms.forEach(gym => {
-        const marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
-        marker.bindPopup(`<b>${gym.name}</b><br>${gym.location}<br>⭐ ${gym.rating}`);
-      });
-    });
-    </script>
-<div class = container>
-    <form action="">
-        <input type="text" placeholder="search for gym">
-    </form>
-</div>
+    <p class="center-text"><b>Gym Reccomendation System: </b> <a href="http://127.0.0.1:8000/map">link text</a></p>
+    <p class="center-text">Mental Health and Discipline: Start small and become a real beast!</p>
+
+    <!-- Put links for gymrec and other stuff -->
+
 
 </body>
 </html>
