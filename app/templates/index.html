@@ -4,18 +4,40 @@
     <title>No Excuses</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
+            opacity: 0;
+            animation: fadeIn 2s forwards;
             background-image: url('/static/images/untitled_design.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
         }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        p.big {
+            line-height: 1.8;
+        }
     </style>
 </head>
+<header>
+    <h1 class="wider">Logo</h1>
+
+    <nav class="nav-links">
+        <a href="default.asp">Home</a>
+        <a href="news.asp">News</a>
+        <a href="contact.asp">Contact</a>
+        <a href="about.asp">About</a>
+    </nav>
+
+</header>
 <body>
-    <h1>Welcome to No Excuses!</h1>
-    <h1>You are jaded with life right now, but we can build with this!</h1>
+    <h1 class="big">Welcome to No Excuses!</h1>
+    <h1 class="big">You are jaded with life right now, but we can build with this!</h1>
     <p>Does any ONE of these fit with you right now? </p>
     <ul>
         <li>Tired of your bad health</li>
@@ -23,19 +45,29 @@
         <li>The modern news cycle of negativity biting you on the inside</li>
         <li>No motivation/discipline</li>
         <li>Procrasination</li>
+        <li>Brain Fog</li>
         <li>Weak time management skills</li>
         <li>Losing that child like ambition for life</li>
         <li>Can't enjoy past interests</li>
     </ul>
     <p class="center-text"><em>I've been through all of this, so I'll teach you all I know!</em></p>
 
-    <h1>IMPORTANT: This will be inhibited into you with unapologetic honesty, and the info is free!</h1>
+    <p><b>IMPORTANT: This will be inhibited into you with unapologetic honesty, and the info is free!</b></p>
+
+    <h1>My philosophy</h1>
+
+    <p>...will be to focus on mentality more than your physical health as of right now, as with a strong mind will lead to choices</p>
+
+    <h1>The Meat and Potatoes</h1>
 
     <p class="center-text"><b>Gym Reccomendation System: </b> <a href="http://127.0.0.1:8000/map">link text</a></p>
     <p class="center-text">Mental Health and Discipline: Start small and become a real beast!</p>
 
     <!-- Put links for gymrec and other stuff -->
 
+<footer>
+    <p>Created in 2025</p>
+</footer>
 
 </body>
 </html>
