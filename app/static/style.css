@@ -123,8 +123,27 @@ ul {
   padding: 0;
 }
 
+img {
+  margin-top: 20px;
+  width: 450px;
+  position: relative;
+  top: -270px; /* Moves the image 20 pixels up */
+  right: -400px;
+}
+
 .center-text {
   text-align: center;
+}
+
+.right-text {
+  text-align: center;
+  margin-right: 200px;
+  width: 600px;
+}
+
+.top-text {
+  position: relative;
+  top: -200px;
 }
 
 .wider {
@@ -166,6 +185,10 @@ ul {
 
 .nav-links a:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+.footer {
+  width: 1500px;
 }
 
 

@@ -49,9 +49,8 @@ def get_db():
 
 # updates
 # a nice front page (learn CSS and implement everything on front page thru trial and error, make it professional but not souless)
-# make the boxes fill a bigger portion of the screen, more spaces between the boxes and move info when scrolling down
-# information box at the bottom and header
-# add images, and put them to the side (see concept 4)
+# make footer wider
+# fix gym map
 
 class User(BaseModel):
     name: str
