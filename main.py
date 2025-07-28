@@ -49,8 +49,10 @@ def get_db():
 
 # updates
 # a nice front page (learn CSS and implement everything on front page thru trial and error, make it professional but not souless)
+# fix gym map (keep ratings in house with selenium, and make it nicer with another css file)
+# when done, write up and put up a list of questions about a prospective gym for users to answer
 # make footer wider
-# fix gym map
+# https://www.youtube.com/watch?v=-gHQxcEAO8w
 
 class User(BaseModel):
     name: str
