@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 import models, schemas, crud
 from database import SessionLocal, engine
+import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
@@ -52,7 +53,10 @@ def get_db():
 # fix gym map (keep ratings in house with selenium, and make it nicer with another css file)
 # when done, write up and put up a list of questions about a prospective gym for users to answer
 # make footer wider
+# new ratings method 
+# set up Google Places API
 # https://www.youtube.com/watch?v=-gHQxcEAO8w
+# brainstorm new ideas
 
 class User(BaseModel):
     name: str
@@ -78,4 +82,4 @@ async def root(request: Request):
 
 @app.get("/map", response_class=HTMLResponse)
 async def show_map(request: Request):
-    return templates.TemplateResponse("dynamic_map.html", {"request": request}) # problem child
+    return templates.TemplateResponse("dynamic_map.html", {"request": request})

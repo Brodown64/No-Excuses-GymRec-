@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>No Excuses</title>
+    <title>Map</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <style>
+        body {
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            background-image: url('/static/images/abstract.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        p.big {
+            line-height: 1.8;
+        }
+    </style>
 </head>
 <body>
     <h1>Gym Recommendations</h1>
@@ -16,7 +34,7 @@
         <button id="search-btn">Search</button>
     </div>
     
-    <i>Check Your Gym in Google!</i>
+    <i class="center-text white-text">Check Your Gym in Google!</i>
 
     <div id="input">
         <form action="https://www.google.com/search" method="get">
@@ -25,7 +43,6 @@
         </form>
     </div>
     
-    <img src="https://i.pinimg.com/736x/ed/c0/98/edc09829d14fce2738ad7b5d4a64ad84.jpg" alt="Rise and Grind" width="1150" height="950" style="float:right">
 
     <div id="map"></div>
 
@@ -111,6 +128,7 @@
         });
     </script>
 
-    <i>MVP finalized 7/5/25</i>
+
+    <p class = "white-text"> Nobody believes in you, you've lost again and again, the lights are cut off. But you're still looking at your dream, reviewing it every day and saying to yourself ITS NOT OVER UNTIL I WIN - Les Brown</p>
 </body>
 </html>
