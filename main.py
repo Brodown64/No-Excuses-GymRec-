@@ -83,3 +83,7 @@ async def root(request: Request):
 @app.get("/map", response_class=HTMLResponse)
 async def show_map(request: Request):
     return templates.TemplateResponse("dynamic_map.html", {"request": request})
+
+@app.get("/story", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("story.html", {"request": request})
